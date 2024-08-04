@@ -1,0 +1,36 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services" // Apply the Google services plugin
+}
+
+android {
+    namespace = "com.example.smonsg"
+    compileSdk = 34 // Update this to the latest stable version you are using
+    ndkVersion = "23.1.7779620" // Update this if necessary
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.smonsg"
+        minSdk = 30 // Update if necessary
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-core:21.1.1' // Ensure this is the latest version
+    // Add other Firebase dependencies as needed
+}

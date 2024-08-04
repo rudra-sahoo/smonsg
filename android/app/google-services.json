@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96936363102",
+    "project_id": "smonsg-knr",
+    "storage_bucket": "smonsg-knr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96936363102:android:91bc888c3da852e26ba0cf",
+        "android_client_info": {
+          "package_name": "com.example.smonsg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6fBaPfyiWpvOcm1QwV9rpS3LOLU-1BGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
