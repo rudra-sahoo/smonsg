@@ -8,7 +8,7 @@ class AuthService {
     receiveTimeout: const Duration(seconds: 60), // 60 seconds
     sendTimeout: const Duration(seconds: 60), // 60 seconds
   ));
-  final String baseUrl = 'https://itsrudra.xyz/api/auth';
+  final String baseUrl = 'https://fine-lizard-smoothly.ngrok-free.app/api/auth';
 
   Future<File> compressFile(File file) async {
     final result = await FlutterImageCompress.compressAndGetFile(

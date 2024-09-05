@@ -7,7 +7,7 @@ class MessageService {
   final Dio _dio = Dio();
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final String _baseUrl =
-      'https://itsrudra.xyz'; // Replace with your API base URL
+      'https://fine-lizard-smoothly.ngrok-free.app'; // Replace with your API base URL
   final MessageDatabase _messageDatabase = MessageDatabase();
 
   final StreamController<Map<String, dynamic>> _messageController =

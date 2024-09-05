@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserService {
-  final String baseUrl = 'https://itsrudra.xyz/api/users/';
+  final String baseUrl = 'https://fine-lizard-smoothly.ngrok-free.app/api/users/';
   late Dio _dio;
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 

@@ -1,70 +1,56 @@
-import 'package:flutter/foundation.dart';
-import 'package:smonsg/services/user_service.dart';
-// For storing binary data
-import 'package:dio/dio.dart';
+import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodeProvider extends ChangeNotifier {
-  final UserService _userService = UserService();
-  String? _qrUrl;
-  Uint8List? _qrContent; // Add this to store the QR code content
-  bool _isLoading = false;
+  Uint8List? qrContent;
+  bool isLoading = false;
+  Color? lastColor;
 
-  String? get qrUrl => _qrUrl;
-  Uint8List? get qrContent => _qrContent; // Add this getter
-  bool get isLoading => _isLoading;
+  /// Generates the QR code with the provided [data] and [color].
+  Future<void> generateQRCode(String data, Color color) async {
+  isLoading = true;
+  notifyListeners();
 
-  Future<void> fetchQRCodeUrl(String username) async {
-    if (_qrUrl != null) {
-      // QR code is already fetched
-      return;
-    }
-
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      _qrUrl = await _userService.getQRCodeUrl(username);
-      _qrContent =
-          await _fetchQRCodeContent(_qrUrl!); // Fetch and store content
-    } catch (e) {
-      // Handle error
-      _qrUrl = null;
-      _qrContent = null; // Reset content on error
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<void> generateQRCode(String username) async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      _qrUrl = await _userService.generateQRCode(username);
-      _qrContent =
-          await _fetchQRCodeContent(_qrUrl!); // Fetch and store content
-    } catch (e) {
-      // Handle error
-      _qrUrl = null;
-      _qrContent = null; // Reset content on error
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<void> clearQRCode() async {
-    _qrUrl = null;
-    _qrContent = null; // Clear content
-    notifyListeners();
-  }
-
-  Future<Uint8List> _fetchQRCodeContent(String url) async {
-    final response = await Dio().get(
-      url,
-      options: Options(responseType: ResponseType.bytes),
+  try {
+    final qrPainter = QrPainter(
+      data: data,
+      version: QrVersions.auto,
+      gapless: true,
+      eyeStyle: QrEyeStyle(
+        eyeShape: QrEyeShape.square,
+        color: color,
+      ),
+      dataModuleStyle: QrDataModuleStyle(
+        dataModuleShape: QrDataModuleShape.circle,
+        color: color,
+      ),
+      errorCorrectionLevel: QrErrorCorrectLevel.H, // High error correction level
     );
-    return response.data;
+
+    final image = await qrPainter.toImage(1000); // Increased size to 1000x1000 pixels
+    final byteData = await image.toByteData(format: ImageByteFormat.png);
+    qrContent = byteData?.buffer.asUint8List();
+
+    lastColor = color;
+  } catch (e) {
+    print("QR generation error: $e");
+    qrContent = null;
+  } finally {
+    isLoading = false;
+    notifyListeners();
   }
+}
+
+  /// Returns the color in which the QR was last generated.
+  Color get lastUsedColor => lastColor ?? Colors.orange; // Default color is orange if none is set
+
+  /// Randomizes the color and generates the QR code with the provided [data].
+  void changeColor(String data) {
+  final randomColor = Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  generateQRCode(data, randomColor);
+  lastColor = randomColor; // Store the last selected color
+}
 }

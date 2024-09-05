@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class FriendService {
-  final String baseUrl = 'https://itsrudra.xyz/api/friends';
+  final String baseUrl = 'https://fine-lizard-smoothly.ngrok-free.app/api/friends';
   final Dio _dio = Dio();
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final BaseCacheManager _cacheManager = DefaultCacheManager();
